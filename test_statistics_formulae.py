@@ -36,14 +36,15 @@ def test_calculate_median_with_statistics_module():
 def test_calculate_mode_without_statistics_module():
     # Calculates the mode (最頻値) from the elements in mode_target_values.
     mode_target_values = [300, 100, 200, 100, 400, 150, 100, 200, 200, 150, 200, 50, 300]
-    iteration_indexes = [0]
-    for target_index in range(len(mode_target_values)):
-        if target_index == 0:
-            continue
+    no_duplicates_list = list(set(mode_target_values))
+    duplicates_dict = {}
+    for target_number in no_duplicates_list:
+        duplicates_dict[target_number] = mode_target_values.count(target_number)
+    mode = max()
+    assert mode == 200
     """
-    重複していない値を.cont()に渡して出現回数を数えさせたい。
-    mode_target_values[0]のときは無条件でiteration_indexesにリストインデックスを.append()。
-    mode_target_values[1]以降のとき、もし重複があればiteration_indexesにリストインデックスを.append()しない。
+    duplicates_dictの各キーにアサインされた重複回数をmax()で比較して、
+    最も大きい重複回数のキーをモードに代入したい。
     
     モジュールを使うとこう：
     result = statistics.mode(mode_target_values)
