@@ -26,3 +26,28 @@ def test_calculate_median_without_statistics_module():
         median_target_candidates = [median_target_values_sorted[int((len(median_target_values_sorted)/2) + 1)]] # Sorts the median_target_values and find 1 candidate for the median.
         target_median = median_target_candidates[0]
     assert target_median == 6.5
+
+def test_calculate_median_with_statistics_module():
+    # Calculates the median (中央値) from the elements in median_target_values.
+    median_target_values = [0, 1, 2, 3, 6, 7, 7, 8, 10, 12]
+    target_median = statistics.median(median_target_values)
+    assert target_median == 6.5
+
+def test_calculate_mode_without_statistics_module():
+    # Calculates the mode (最頻値) from the elements in mode_target_values.
+    mode_target_values = [300, 100, 200, 100, 400, 150, 100, 200, 200, 150, 200, 50, 300]
+    no_duplicates_list = list(set(mode_target_values)) # Makes a list of values without duplicates.
+    duplicates_dict = {}
+    for target_number in no_duplicates_list:
+        # Assigns each number in no_duplicates_list to the dictionary key and the numbers of its duplicates to the dictionary value.
+        duplicates_dict[target_number] = mode_target_values.count(target_number)
+    mode = max(duplicates_dict, key=duplicates_dict.get) # Finds the max number among the values in the duplicates_dict dictionary.
+    assert mode == 200
+
+def test_calculate_mode_with_statistics_module():
+    # Calculates the mode (最頻値) from the elements in mode_target_values.
+    mode_target_values = [300, 100, 200, 100, 400, 150, 100, 200, 200, 150, 200, 50, 300]
+    target_mode = statistics.mode(mode_target_values)
+    assert target_mode == 200
+
+
