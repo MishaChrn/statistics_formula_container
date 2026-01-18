@@ -50,4 +50,25 @@ def test_calculate_mode_with_statistics_module():
     target_mode = statistics.mode(mode_target_values)
     assert target_mode == 200
 
+def test_calculate_quartiles_without_statistics_module():
+    # Calculates the quartiles（四分位数） from the elements in quartiles_target_values.
+    quartiles_target_values = [3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8]
+    quartiles_target_values_sorted = sorted(quartiles_target_values)
 
+"""
+以下を再利用して中央値を求める
+test_calculate_median_without_statistics_module()
+
+中央値前後でリストを二分する
+再度それぞれのリストに以下を再利用する
+test_calculate_median_without_statistics_module()
+
+"""
+
+
+"""
+quartiles（四分位数）
+quantile（分位数）
+q1, q2, q3 = statistics.quantiles(data, n=4)
+
+"""
