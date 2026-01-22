@@ -8,3 +8,4 @@ def calculate_median_without_statistics_module(median_target_values):
     else: # In case the list has odd numbers of elements.
         median_target_candidates = [median_target_values_sorted[int((len(median_target_values_sorted)/2) + 1)]] # Sorts the median_target_values and find 1 candidate for the median.
         target_median = median_target_candidates[0]
+    return target_median
