@@ -44,6 +44,9 @@ def test_calculate_mode_without_statistics_module():
         duplicates_dict[target_number] = mode_target_values.count(target_number)
     mode = max(duplicates_dict, key=duplicates_dict.get) # Finds the max number among the values in the duplicates_dict dictionary.
     assert mode == 200
+"""
+ところでモードが複数の場合をカバーしてない気がする〜
+"""
 
 def test_calculate_mode_with_statistics_module():
     # Calculates the mode (最頻値) from the elements in mode_target_values.
@@ -65,7 +68,7 @@ def test_calculate_quartiles_without_statistics_module():
             quartiles_target_values_sorted_before_quartiles_1.append(quartiles_target_values[index_before])
         for index_after in range(quartiles_1_index, len(quartiles_target_values_sorted)):
             # Creates a new list of the values from the quartiles_1.
-            quartiles_target_values_sorted_before_quartiles_1.append(quartiles_target_values[index_after])
+            quartiles_target_values_sorted_after_quartiles_1.append(quartiles_target_values[index_after])
         quartiles_2 = calculate_median_without_statistics_module(quartiles_target_values_sorted_before_quartiles_1)
         quartiles_3 = calculate_median_without_statistics_module(quartiles_target_values_sorted_after_quartiles_1)
     else:
@@ -74,7 +77,7 @@ def test_calculate_quartiles_without_statistics_module():
             quartiles_target_values_sorted_before_quartiles_1.append(quartiles_target_values[index_before])
         for index_after in range(quartiles_1_index + 1, len(quartiles_target_values_sorted)):
             # Creates a new list of the values after the quartiles_1.
-            quartiles_target_values_sorted_before_quartiles_1.append(quartiles_target_values[index_after])
+            quartiles_target_values_sorted_after_quartiles_1.append(quartiles_target_values[index_after])
         quartiles_2 = calculate_median_without_statistics_module(quartiles_target_values_sorted_before_quartiles_1)
         quartiles_3 = calculate_median_without_statistics_module(quartiles_target_values_sorted_after_quartiles_1)
     assert quartiles_1 == 3.0
