@@ -24,7 +24,7 @@ def test_calculate_median_without_statistics_module():
         median_target_candidates = [median_target_values_sorted[(int(len(median_target_values_sorted)/2) - 1)], median_target_values_sorted[int(len(median_target_values_sorted)/2)]] # Sorts the median_target_values and find 2 candidates for the median.
         target_median = sum(median_target_candidates) / len(median_target_candidates)
     else: # In case the list has odd numbers of elements.
-        median_target_candidates = [median_target_values_sorted[int((len(median_target_values_sorted)/2) + 1)]] # Sorts the median_target_values and find 1 candidate for the median.
+        median_target_candidates = [median_target_values_sorted[int(len(median_target_values_sorted)/2)]] # Sorts the median_target_values and find 1 candidate for the median.
         target_median = median_target_candidates[0]
     assert target_median == 6.5
 
@@ -58,28 +58,28 @@ def test_calculate_quartiles_without_statistics_module():
     # Calculates the quartiles（四分位数） from the elements in quartiles_target_values.
     quartiles_target_values = [3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8]
     quartiles_target_values_sorted = sorted(quartiles_target_values) # Creates a sorted list.
-    quartiles_1 = calculate_median_without_statistics_module(quartiles_target_values) # Calculates the median of the quartiles_target_values_sorted list.
-    quartiles_1_index = quartiles_target_values_sorted.index(quartiles_1) # Verifies the index of the median of the quartiles_target_values_sorted list.
-    quartiles_target_values_sorted_before_quartiles_1 =[]
-    quartiles_target_values_sorted_after_quartiles_1 = []
-    if len(quartiles_target_values) % 2 == 0:
-        for index_before in range(0, quartiles_1_index + 1):
-            # Creates a new list of the values until the quartiles_1.
-            quartiles_target_values_sorted_before_quartiles_1.append(quartiles_target_values[index_before])
-        for index_after in range(quartiles_1_index, len(quartiles_target_values_sorted)):
-            # Creates a new list of the values from the quartiles_1.
-            quartiles_target_values_sorted_after_quartiles_1.append(quartiles_target_values[index_after])
-        quartiles_2 = calculate_median_without_statistics_module(quartiles_target_values_sorted_before_quartiles_1)
-        quartiles_3 = calculate_median_without_statistics_module(quartiles_target_values_sorted_after_quartiles_1)
-    else:
-        for index_before in range(0, quartiles_1_index):
-            # Creates a new list of the values before the quartiles_1.
-            quartiles_target_values_sorted_before_quartiles_1.append(quartiles_target_values[index_before])
-        for index_after in range(quartiles_1_index + 1, len(quartiles_target_values_sorted)):
-            # Creates a new list of the values after the quartiles_1.
-            quartiles_target_values_sorted_after_quartiles_1.append(quartiles_target_values[index_after])
-        quartiles_2 = calculate_median_without_statistics_module(quartiles_target_values_sorted_before_quartiles_1)
-        quartiles_3 = calculate_median_without_statistics_module(quartiles_target_values_sorted_after_quartiles_1)
+    quartiles_2 = calculate_median_without_statistics_module(quartiles_target_values) # Calculates the median of the quartiles_target_values_sorted list.
+    quartiles_2_index = quartiles_target_values_sorted.index(quartiles_2) # Verifies the index of the median of the quartiles_target_values_sorted list.
+    quartiles_target_values_sorted_before_quartiles_2 =[]
+    quartiles_target_values_sorted_after_quartiles_2 = []
+    if len(quartiles_target_values) % 2 == 0: # In case the list has even numbers of elements.
+        for index_before in range(0, quartiles_2_index + 1):
+            # Creates a new list of the values until the quartiles_2.
+            quartiles_target_values_sorted_before_quartiles_2.append(quartiles_target_values_sorted[index_before])
+        for index_after in range(quartiles_2_index, len(quartiles_target_values_sorted)):
+            # Creates a new list of the values from the quartiles_2.
+            quartiles_target_values_sorted_after_quartiles_2.append(quartiles_target_values_sorted[index_after])
+        quartiles_1 = calculate_median_without_statistics_module(quartiles_target_values_sorted_before_quartiles_2)
+        quartiles_3 = calculate_median_without_statistics_module(quartiles_target_values_sorted_after_quartiles_2)
+    else: # In case the list has odd numbers of elements.
+        for index_before in range(0, quartiles_2_index):
+            # Creates a new list of the values before the quartiles_2.
+            quartiles_target_values_sorted_before_quartiles_2.append(quartiles_target_values_sorted[index_before])
+        for index_after in range(quartiles_2_index + 1, len(quartiles_target_values_sorted)):
+            # Creates a new list of the values after the quartiles_2.
+            quartiles_target_values_sorted_after_quartiles_2.append(quartiles_target_values_sorted[index_after])
+        quartiles_1 = calculate_median_without_statistics_module(quartiles_target_values_sorted_before_quartiles_2)
+        quartiles_3 = calculate_median_without_statistics_module(quartiles_target_values_sorted_after_quartiles_2)
     assert quartiles_1 == 3.0
     assert quartiles_2 == 3.8
     assert quartiles_3 == 4.2
@@ -88,7 +88,7 @@ def test_calculate_quartiles_without_statistics_module():
 以下を再利用して中央値を求める
 test_calculate_median_without_statistics_module()
 
-quartiles_target_values_sorted_median --> quartiles_1
+quartiles_target_values_sorted_median --> quartiles_2
 
 中央値前後でリストを二分する (偶数奇数を分ける)
 奇数の場合、medianより前と後のリスト
