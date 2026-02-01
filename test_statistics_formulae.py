@@ -56,15 +56,15 @@ def test_calculate_mode_with_statistics_module():
 
 @pytest.mark.parametrize(
     "quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected",
-    ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8], 3.0, 3.8, 4.2),
-    ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8, 4.6], 3.2, 3.9, 4.4)
+    [([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8], 3.0, 3.8, 4.2),
+     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8, 4.6], 3.2, 3.9, 4.4)]
 ) # Error: must be equal to the number of values
 def test_calculate_quartiles_without_statistics_module(quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected):
     # Calculates the quartiles（四分位数） from the elements in quartiles_target_values.
     quartiles_target_values_sorted = sorted(quartiles_target_values) # Creates a sorted list.
     quartiles_2 = calculate_median_without_statistics_module(quartiles_target_values) # Calculates the median of the quartiles_target_values_sorted list.
     quartiles_2_index = quartiles_target_values_sorted.index(quartiles_2) # Verifies the index of the median of the quartiles_target_values_sorted list.
-    quartiles_target_values_sorted_before_quartiles_2 =[]
+    quartiles_target_values_sorted_before_quartiles_2 = []
     quartiles_target_values_sorted_after_quartiles_2 = []
     if len(quartiles_target_values) % 2 == 0: # In case the list has even numbers of elements.
         for index_before in range(0, quartiles_2_index + 1):
@@ -88,19 +88,6 @@ def test_calculate_quartiles_without_statistics_module(quartiles_target_values, 
     assert quartiles_2 == quartiles_2_expected
     assert quartiles_3 == quartiles_3_expected
 
-"""
-以下を再利用して中央値を求める
-test_calculate_median_without_statistics_module()
-
-quartiles_target_values_sorted_median --> quartiles_2
-
-中央値前後でリストを二分する (偶数奇数を分ける)
-奇数の場合、medianより前と後のリスト
-偶数の場合、median以前と以降のリスト
-再度それぞれのリストに以下を再利用する
-test_calculate_median_without_statistics_module()
-
-"""
 
 
 """
