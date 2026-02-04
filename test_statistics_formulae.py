@@ -63,19 +63,20 @@ def test_calculate_quartiles_without_statistics_module(quartiles_target_values, 
     # Calculates the quartiles（四分位数） from the elements in quartiles_target_values.
     quartiles_target_values_sorted = sorted(quartiles_target_values) # Creates a sorted list.
     quartiles_2 = calculate_median_without_statistics_module(quartiles_target_values) # Calculates the median of the quartiles_target_values_sorted list.
-    quartiles_2_index = quartiles_target_values_sorted.index(quartiles_2) # Verifies the index of the median of the quartiles_target_values_sorted list.
+#    quartiles_2_index = quartiles_target_values_sorted.index(quartiles_2) # Verifies the index of the median of the quartiles_target_values_sorted list.
     quartiles_target_values_sorted_before_quartiles_2 = []
     quartiles_target_values_sorted_after_quartiles_2 = []
     if len(quartiles_target_values) % 2 == 0: # In case the list has even numbers of elements.
-        for index_before in range(0, quartiles_2_index + 1):
+        for index_before in range(0, int(len(quartiles_target_values_sorted)/2)):
             # Creates a new list of the values until the quartiles_2.
             quartiles_target_values_sorted_before_quartiles_2.append(quartiles_target_values_sorted[index_before])
-        for index_after in range(quartiles_2_index, len(quartiles_target_values_sorted)):
+        for index_after in range(int(len(quartiles_target_values_sorted)/2), len(quartiles_target_values_sorted)):
             # Creates a new list of the values from the quartiles_2.
             quartiles_target_values_sorted_after_quartiles_2.append(quartiles_target_values_sorted[index_after])
         quartiles_1 = calculate_median_without_statistics_module(quartiles_target_values_sorted_before_quartiles_2)
         quartiles_3 = calculate_median_without_statistics_module(quartiles_target_values_sorted_after_quartiles_2)
     else: # In case the list has odd numbers of elements.
+        quartiles_2_index = quartiles_target_values_sorted.index(quartiles_2)  # Verifies the index of the median of the quartiles_target_values_sorted list.
         for index_before in range(0, quartiles_2_index):
             # Creates a new list of the values before the quartiles_2.
             quartiles_target_values_sorted_before_quartiles_2.append(quartiles_target_values_sorted[index_before])
