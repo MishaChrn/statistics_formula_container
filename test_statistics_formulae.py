@@ -58,7 +58,7 @@ def test_calculate_mode_with_statistics_module():
     "quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected",
     [([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8], 3.0, 3.8, 4.2),
      ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8, 4.6], 3.2, 3.9, 4.4)]
-) # Error: must be equal to the number of values
+)
 def test_calculate_quartiles_without_statistics_module(quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected):
     # Calculates the quartiles（四分位数） from the elements in quartiles_target_values.
     quartiles_target_values_sorted = sorted(quartiles_target_values) # Creates a sorted list.
@@ -89,11 +89,16 @@ def test_calculate_quartiles_without_statistics_module(quartiles_target_values, 
     assert quartiles_2 == quartiles_2_expected
     assert quartiles_3 == quartiles_3_expected
 
+@pytest.mark.parametrize(
+    "quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected",
+    [([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8], 3.0, 3.8, 4.2),
+     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8, 4.6], 3.2, 3.9, 4.4)]
+)
+def test_calculate_quartiles_with_statistics_module(quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected):
+    quartiles_1, quartiles_2, quartiles_3 = statistics.quantiles(quartiles_target_values, n=4)
+    assert quartiles_1 == quartiles_1_expected
+    assert quartiles_2 == quartiles_2_expected
+    assert quartiles_3 == quartiles_3_expected
 
-
-"""
-quartiles（四分位数）
-quantile（分位数）
-q1, q2, q3 = statistics.quantiles(data, n=4)
-
-"""
+# FAILED test_statistics_formulae.py::test_calculate_quartiles_with_statistics_module[quartiles_target_values1-3.2-3.9-4.4] - assert 3.1 == 3.2
+# 偶数個のデータの場合にエラーになってしまった。
