@@ -91,7 +91,8 @@ def test_calculate_quartiles_without_statistics_module(quartiles_target_values, 
 
 @pytest.mark.parametrize(
     "quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected",
-    [([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8], 3.0, 3.8, 4.2),
+    [([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2], 3.0, 3.75, 4.2),
+     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8], 3.0, 3.8, 4.2),
      ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8, 4.6], 3.2, 3.9, 4.4)]
 )
 def test_calculate_quartiles_with_statistics_module(quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected):
@@ -102,3 +103,16 @@ def test_calculate_quartiles_with_statistics_module(quartiles_target_values, qua
 
 # FAILED test_statistics_formulae.py::test_calculate_quartiles_with_statistics_module[quartiles_target_values1-3.2-3.9-4.4] - assert 3.1 == 3.2
 # 偶数個のデータの場合にエラーになってしまった。
+
+"""
+代替案：
+import numpy as np
+
+
+data = [12, 34, 57, 22, 97, 51, 69, 87, 72, 62]
+
+#四分位数をそれぞれ計算
+q1 = np.percentile(data, 25)  # 第一四分位数
+q2 = np.percentile(data, 50)  # 第二四分位数（中央値）
+q3 = np.percentile(data, 75)  # 第三四分位数
+"""
