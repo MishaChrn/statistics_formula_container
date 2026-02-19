@@ -56,12 +56,12 @@ def test_calculate_mode_with_statistics_module():
     assert target_mode == 200
 
 @pytest.mark.parametrize(
-    "quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected",
-    [([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2], 3.0, 3.75, 4.2),
-     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8], 3.0, 3.8, 4.2),
-     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8, 4.6], 3.2, 3.9, 4.4)]
+    "quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected, interquartile_range_expected",
+    [([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2], 3.0, 3.75, 4.2, 1.2),
+     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8], 3.0, 3.8, 4.2, 1.2),
+     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8, 4.6], 3.2, 3.9, 4.4, 1.2)]
 )
-def test_calculate_quartiles_without_statistics_module(quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected):
+def test_calculate_quartiles_without_statistics_module(quartiles_target_values, quartiles_1_expected, quartiles_2_expected, quartiles_3_expected, interquartile_range_expected):
     # Calculates the quartiles（四分位数） from the elements in quartiles_target_values.
     quartiles_target_values_sorted = sorted(quartiles_target_values) # Creates a sorted list.
     quartiles_2 = calculate_median_without_statistics_module(quartiles_target_values) # Calculates the median of the quartiles_target_values_sorted list.
@@ -87,24 +87,28 @@ def test_calculate_quartiles_without_statistics_module(quartiles_target_values, 
             quartiles_target_values_sorted_after_quartiles_2.append(quartiles_target_values_sorted[index_after])
         quartiles_1 = calculate_median_without_statistics_module(quartiles_target_values_sorted_before_quartiles_2)
         quartiles_3 = calculate_median_without_statistics_module(quartiles_target_values_sorted_after_quartiles_2)
+    interquartile_range = quartiles_3 - quartiles_1
     assert quartiles_1 == quartiles_1_expected
     assert quartiles_2 == quartiles_2_expected
     assert quartiles_3 == quartiles_3_expected
+    assert interquartile_range == pytest.approx(interquartile_range_expected)
 
 @pytest.mark.parametrize(
-    "quartiles_target_values_with, quartiles_1_expected_with, quartiles_2_expected_with, quartiles_3_expected_with",
-    [([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2], 3.0, 3.75, 4.2),
-     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8], 3.0, 3.8, 4.2),
-     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8, 4.6], 3.2, 3.9, 4.4)]
+    "quartiles_target_values_with, quartiles_1_expected_with, quartiles_2_expected_with, quartiles_3_expected_with, interquartile_range_expected_with",
+    [([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2], 3.0, 3.75, 4.2, 1.2),
+     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8], 3.0, 3.8, 4.2, 1.2),
+     ([3.0, 4.0, 5.5, 3.5, 4.2, 3.4, 2.8, 4.2, 4.7, 2.2, 3.8, 4.6], 3.2, 3.9, 4.4, 1.2)]
 )
-def test_calculate_quartiles_with_statistics_module(quartiles_target_values_with, quartiles_1_expected_with, quartiles_2_expected_with, quartiles_3_expected_with):
+def test_calculate_quartiles_with_statistics_module(quartiles_target_values_with, quartiles_1_expected_with, quartiles_2_expected_with, quartiles_3_expected_with, interquartile_range_expected_with):
     quartiles_1, quartiles_2, quartiles_3 = statistics.quantiles(quartiles_target_values_with, n=4) # Errors with wrong results
     # quartiles_1 = np.percentile(quartiles_target_values_with, 25)
     # quartiles_2 = np.percentile(quartiles_target_values_with, 50)
     # quartiles_3 = np.percentile(quartiles_target_values_with, 75)
+    interquartile_range = quartiles_3 - quartiles_1
     assert quartiles_1 == pytest.approx(quartiles_1_expected_with)
     assert quartiles_2 == pytest.approx(quartiles_2_expected_with)
     assert quartiles_3 == pytest.approx(quartiles_3_expected_with)
+    assert interquartile_range == interquartile_range_expected_with
 
 # FAILED test_statistics_formulae.py::test_calculate_quartiles_with_statistics_module[quartiles_target_values1-3.2-3.9-4.4] - assert 3.1 == 3.2
 # 偶数個のデータの場合にエラーになってしまった。
