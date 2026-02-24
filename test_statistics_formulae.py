@@ -121,3 +121,21 @@ def test_calculate_quartiles_without_statistics_module(quartiles_target_values, 
 def test_calculate_population_variance_with_statistics_module(population_variance_target_values_with, population_variance_expected_with):
     population_variance_result = statistics.pvariance(population_variance_target_values_with)
     assert population_variance_result == population_variance_expected_with
+
+@pytest.mark.parametrize(
+    "population_variance_target_values, population_variance_expected",
+    [
+        ([40, 35, 30, 25, 30], 26),
+        ([50, 30, 60, 25, 65], 254)
+    ]
+)
+def test_calculate_population_variance_without_statistics_module(population_variance_target_values_with, population_variance_expected_with):
+    pass
+
+"""
+calculate mean -> use my mean def
+subtract mean from each value
+square each subtracted value
+sum up the squared values
+divide the sum by the number of samples
+"""
