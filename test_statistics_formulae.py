@@ -2,6 +2,7 @@
 import pytest
 import statistics
 from statistics_formulae import calculate_median_without_statistics_module
+from statistics_formulae import calculate_arithmetic_mean_without_statistics_module
 import numpy as np
 
 def test_calculate_arithmetic_mean_without_statistics_module():
@@ -129,8 +130,13 @@ def test_calculate_population_variance_with_statistics_module(population_varianc
         ([50, 30, 60, 25, 65], 254)
     ]
 )
-def test_calculate_population_variance_without_statistics_module(population_variance_target_values_with, population_variance_expected_with):
-    pass
+def test_calculate_population_variance_without_statistics_module(population_variance_target_values, population_variance_expected):
+    population_variance_target_value_mean = calculate_arithmetic_mean_without_statistics_module(population_variance_target_values)
+    subtracted_population_variance_values = [population_variance_target_value - population_variance_target_value_mean for population_variance_target_value in population_variance_target_values]
+    squared_subtracted_population_variance_values = np.square(subtracted_population_variance_values)
+    sum_of_squared_population_variance_values = sum(squared_subtracted_population_variance_values)
+    population_variance = sum_of_squared_population_variance_values / len(population_variance_target_values)
+    assert population_variance == population_variance_expected
 
 """
 calculate mean -> use my mean def

@@ -9,3 +9,9 @@ def calculate_median_without_statistics_module(median_target_values):
         median_target_candidates = [median_target_values_sorted[int(len(median_target_values_sorted)/2)]] # Sorts the median_target_values and find 1 candidate for the median.
         target_median = median_target_candidates[0]
     return target_median
+
+def calculate_arithmetic_mean_without_statistics_module(mean_target_values):
+    # Calculates the arithmetic mean (平均値) from the elements in mean_target_values.
+    mean_target_sum = sum(mean_target_values)
+    target_mean = mean_target_sum / len(mean_target_values)
+    return target_mean
