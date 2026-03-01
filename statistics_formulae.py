@@ -1,4 +1,6 @@
 
+import numpy as np
+
 def calculate_median_without_statistics_module(median_target_values):
     # Calculates the median (中央値) from the elements in median_target_values.
     median_target_values_sorted = sorted(median_target_values)
@@ -15,3 +17,11 @@ def calculate_arithmetic_mean_without_statistics_module(mean_target_values):
     mean_target_sum = sum(mean_target_values)
     target_mean = mean_target_sum / len(mean_target_values)
     return target_mean
+
+def calculate_population_variance_without_statistics_module(population_variance_target_values):
+    population_variance_target_value_mean = calculate_arithmetic_mean_without_statistics_module(population_variance_target_values)
+    subtracted_population_variance_values = [population_variance_target_value - population_variance_target_value_mean for population_variance_target_value in population_variance_target_values]
+    squared_subtracted_population_variance_values = np.square(subtracted_population_variance_values)
+    sum_of_squared_population_variance_values = sum(squared_subtracted_population_variance_values)
+    population_variance = sum_of_squared_population_variance_values / len(population_variance_target_values)
+    return population_variance

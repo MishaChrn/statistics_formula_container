@@ -3,6 +3,7 @@ import pytest
 import statistics
 from statistics_formulae import calculate_median_without_statistics_module
 from statistics_formulae import calculate_arithmetic_mean_without_statistics_module
+from statistics_formulae import calculate_population_variance_without_statistics_module
 import numpy as np
 
 def test_calculate_arithmetic_mean_without_statistics_module():
@@ -120,6 +121,7 @@ def test_calculate_quartiles_without_statistics_module(quartiles_target_values, 
     ]
 )
 def test_calculate_population_variance_with_statistics_module(population_variance_target_values_with, population_variance_expected_with):
+    # Calculates the population variance (母分散) with python statistics module.
     population_variance_result = statistics.pvariance(population_variance_target_values_with)
     assert population_variance_result == population_variance_expected_with
 
@@ -131,6 +133,7 @@ def test_calculate_population_variance_with_statistics_module(population_varianc
     ]
 )
 def test_calculate_population_variance_without_statistics_module(population_variance_target_values, population_variance_expected):
+    # Calculates the population variance (母分散) without python statistics module.
     population_variance_target_value_mean = calculate_arithmetic_mean_without_statistics_module(population_variance_target_values)
     subtracted_population_variance_values = [population_variance_target_value - population_variance_target_value_mean for population_variance_target_value in population_variance_target_values]
     squared_subtracted_population_variance_values = np.square(subtracted_population_variance_values)
@@ -138,10 +141,19 @@ def test_calculate_population_variance_without_statistics_module(population_vari
     population_variance = sum_of_squared_population_variance_values / len(population_variance_target_values)
     assert population_variance == population_variance_expected
 
+@pytest.mark.parametrize(
+    "population_standard_deviation_target_values_with, population_standard_deviation_expected_with",
+    [
+        ([40, 35, 30, 25, 30], 5.1),
+        ([50, 30, 60, 25, 65], 15.9)
+    ]
+)
+def test_calculate_population_standard_deviation_with_statistics_module(population_standard_deviation_target_values_with, population_standard_deviation_expected_with):
+    population_standard_deviation_result = statistics.pstdev(population_standard_deviation_target_values_with)
+    assert population_standard_deviation_result == pytest.approx(population_standard_deviation_expected_with)
+
+
 """
-calculate mean -> use my mean def
-subtract mean from each value
-square each subtracted value
-sum up the squared values
-divide the sum by the number of samples
+calculate population variance -> use calculate_population_variance_without_statistics_module(value)
+calculate the positive root of the population variance
 """
