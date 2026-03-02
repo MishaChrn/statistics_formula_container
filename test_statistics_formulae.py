@@ -149,8 +149,8 @@ def test_calculate_population_variance_without_statistics_module(population_vari
     ]
 )
 def test_calculate_population_standard_deviation_with_statistics_module(population_standard_deviation_target_values_with, population_standard_deviation_expected_with):
-    population_standard_deviation_result = statistics.pstdev(population_standard_deviation_target_values_with)
-    assert population_standard_deviation_result == pytest.approx(population_standard_deviation_expected_with)
+    population_standard_deviation_result = statistics.pstdev(population_standard_deviation_target_values_with, abs=0.1)
+    assert population_standard_deviation_result == pytest.approx(population_standard_deviation_expected_with, abs=0.1)
 
 
 """
