@@ -149,9 +149,20 @@ def test_calculate_population_variance_without_statistics_module(population_vari
     ]
 )
 def test_calculate_population_standard_deviation_with_statistics_module(population_standard_deviation_target_values_with, population_standard_deviation_expected_with):
-    population_standard_deviation_result = statistics.pstdev(population_standard_deviation_target_values_with, abs=0.1)
+    population_standard_deviation_result = statistics.pstdev(population_standard_deviation_target_values_with)
     assert population_standard_deviation_result == pytest.approx(population_standard_deviation_expected_with, abs=0.1)
 
+@pytest.mark.parametrize(
+    "population_standard_deviation_target_values, population_standard_deviation_expected",
+    [
+        ([40, 35, 30, 25, 30], 5.1),
+        ([50, 30, 60, 25, 65], 15.9)
+    ]
+)
+def test_calculate_population_standard_deviation_without_statistics_module(population_standard_deviation_target_values, population_standard_deviation_expected):
+    population_variance = calculate_population_variance_without_statistics_module(population_standard_deviation_target_values)
+    population_standard_deviation_result = abs(population_variance ** 0.5)
+    assert population_standard_deviation_result == pytest.approx(population_standard_deviation_expected, abs=0.1)
 
 """
 calculate population variance -> use calculate_population_variance_without_statistics_module(value)
