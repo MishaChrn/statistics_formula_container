@@ -164,7 +164,16 @@ def test_calculate_population_standard_deviation_without_statistics_module(popul
     population_standard_deviation_result = abs(population_variance ** 0.5)
     assert population_standard_deviation_result == pytest.approx(population_standard_deviation_expected, abs=0.1)
 
-"""
-calculate population variance -> use calculate_population_variance_without_statistics_module(value)
-calculate the positive root of the population variance
-"""
+@pytest.mark.parametrize(
+    "coefficient_of_variation_target_values_with, coefficient_of_variation_expected_with",
+    [
+        ([12, 15, 15, 12, 13, 14], 0.1),
+        ([4, 5, 3, 5], 0.2),
+        ([0.8, 1.2, 1.0, 1.6, 0.7], 0.3)
+    ]
+)
+def test_calculate_coefficient_of_variation_with_statistics_module(coefficient_of_variation_target_values_with, coefficient_of_variation_expected_with):
+    mean_result = statistics.mean(coefficient_of_variation_target_values_with)
+    population_standard_deviation_result = statistics.pstdev(coefficient_of_variation_target_values_with)
+    coefficient_of_variation = population_standard_deviation_result / mean_result
+    assert coefficient_of_variation == pytest.approx(coefficient_of_variation_expected_with, abs=0.01)

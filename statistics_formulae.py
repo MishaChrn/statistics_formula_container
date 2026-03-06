@@ -25,3 +25,9 @@ def calculate_population_variance_without_statistics_module(population_variance_
     sum_of_squared_population_variance_values = sum(squared_subtracted_population_variance_values)
     population_variance = sum_of_squared_population_variance_values / len(population_variance_target_values)
     return population_variance
+
+def calculate_population_standard_deviation_without_statistics_module(population_standard_deviation_target_values):
+    population_variance = calculate_population_variance_without_statistics_module(population_standard_deviation_target_values)
+    population_standard_deviation_result = abs(population_variance ** 0.5)
+    return population_standard_deviation_result
+
