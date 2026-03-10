@@ -4,6 +4,7 @@ import statistics
 from statistics_formulae import calculate_median_without_statistics_module
 from statistics_formulae import calculate_arithmetic_mean_without_statistics_module
 from statistics_formulae import calculate_population_variance_without_statistics_module
+from statistics_formulae import calculate_population_standard_deviation_without_statistics_module
 import numpy as np
 
 def test_calculate_arithmetic_mean_without_statistics_module():
@@ -177,3 +178,18 @@ def test_calculate_coefficient_of_variation_with_statistics_module(coefficient_o
     population_standard_deviation_result = statistics.pstdev(coefficient_of_variation_target_values_with)
     coefficient_of_variation = population_standard_deviation_result / mean_result
     assert coefficient_of_variation == pytest.approx(coefficient_of_variation_expected_with, abs=0.01)
+
+@pytest.mark.parametrize(
+    "coefficient_of_variation_target_values, coefficient_of_variation_expected",
+    [
+        ([12, 15, 15, 12, 13, 14], 0.1),
+        ([4, 5, 3, 5], 0.2),
+        ([0.8, 1.2, 1.0, 1.6, 0.7], 0.3)
+    ]
+)
+def test_calculate_coefficient_of_variation_without_statistics_module(coefficient_of_variation_target_values, coefficient_of_variation_expected):
+    mean_result = calculate_arithmetic_mean_without_statistics_module(coefficient_of_variation_target_values)
+    population_standard_deviation_result = calculate_population_standard_deviation_without_statistics_module(coefficient_of_variation_target_values)
+    coefficient_of_variation = population_standard_deviation_result / mean_result
+    assert coefficient_of_variation == pytest.approx(coefficient_of_variation_expected, abs=0.01)
+
