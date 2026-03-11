@@ -193,3 +193,14 @@ def test_calculate_coefficient_of_variation_without_statistics_module(coefficien
     coefficient_of_variation = population_standard_deviation_result / mean_result
     assert coefficient_of_variation == pytest.approx(coefficient_of_variation_expected, abs=0.01)
 
+
+def test_standardize_data_with_statistics_module(standardization_target_values_with, standardized_data_expected_with):
+    mean_result = statistics.mean(standardization_target_values_with)
+    population_standard_deviation_result = statistics.pstdev(standardization_target_values_with)
+    coefficient_of_variation = population_standard_deviation_result / mean_result
+    standardized_data = [standardization_target_value_with - mean_result/coefficient_of_variation for standardization_target_value_with in standardization_target_values_with]
+    assert standardized_data == pytest.approx(standardized_data_expected_with, abs=0.01)
+
+"""
+元の個別データ-平均値/標準偏差
+"""
