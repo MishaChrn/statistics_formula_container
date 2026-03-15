@@ -193,14 +193,22 @@ def test_calculate_coefficient_of_variation_without_statistics_module(coefficien
     coefficient_of_variation = population_standard_deviation_result / mean_result
     assert coefficient_of_variation == pytest.approx(coefficient_of_variation_expected, abs=0.01)
 
-
+@pytest.mark.parametrize(
+    "standardization_target_values_with, standardized_data_expected_with",
+    [([2, 3, 4, 3, 1, 2, 5, 4, 2, 4, 2], [-1.0, -0.5, 0]),
+     ([10, 5, 6, 4, 3, 5, 9, 4, 3, 7, 2], [4.0, -1.0, 0]),
+     ([9, 4, 5, 3, 2, 2, 5, 4, 2, 4, 4], [2.9, -1.3, -0.4])]
+)
 def test_standardize_data_with_statistics_module(standardization_target_values_with, standardized_data_expected_with):
     mean_result = statistics.mean(standardization_target_values_with)
     population_standard_deviation_result = statistics.pstdev(standardization_target_values_with)
     coefficient_of_variation = population_standard_deviation_result / mean_result
-    standardized_data = [standardization_target_value_with - mean_result/coefficient_of_variation for standardization_target_value_with in standardization_target_values_with]
-    assert standardized_data == pytest.approx(standardized_data_expected_with, abs=0.01)
+    standardized_data = [(standardization_target_value_with - mean_result) / coefficient_of_variation for standardization_target_value_with in standardization_target_values_with]
+    assert standardized_data[0] == pytest.approx(standardized_data_expected_with[0], abs=0.01)
+    assert standardized_data[1] == pytest.approx(standardized_data_expected_with[1], abs=0.01)
+    assert standardized_data[2] == pytest.approx(standardized_data_expected_with[2], abs=0.01)
 
 """
+parametrizeの第一引数のリストの長さは8にする
 元の個別データ-平均値/標準偏差
 """
