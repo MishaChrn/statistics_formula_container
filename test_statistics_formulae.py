@@ -195,10 +195,18 @@ def test_calculate_coefficient_of_variation_without_statistics_module(coefficien
 
 @pytest.mark.parametrize(
     "standardization_target_values_with, standardized_data_expected_with",
-    [([2, 3, 4, 3, 1, 2, 5, 4, 2, 4, 2], [-1.0, -0.5, 0]),
-     ([10, 5, 6, 4, 3, 5, 9, 4, 3, 7, 2], [4.0, -1.0, 0]),
-     ([9, 4, 5, 3, 2, 2, 5, 4, 2, 4, 4], [2.9, -1.3, -0.4])]
+    [([2, 3, 4, 3, 2, 7, 5, 6], [-5, -0.5, 0]),
+     ([10, 5, 6, 4, 3, 11, 12, 7], [4.0, -1.0, 0]),
+     ([9, 4, 5, 3, 2, 3, 10, 8], [2.9, -1.3, -0.4])]
 )
+"""
+Make correct expected results
+statistics.pstdev() --> 標準偏差
+statistics.mean() --> 平均値
+標準偏差 / 平均値 --> 変動係数
+(target values [0]-[2] の値 - 平均値) / 変動係数
+-5 はOK
+"""
 def test_standardize_data_with_statistics_module(standardization_target_values_with, standardized_data_expected_with):
     mean_result = statistics.mean(standardization_target_values_with)
     population_standard_deviation_result = statistics.pstdev(standardization_target_values_with)
