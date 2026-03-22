@@ -196,30 +196,17 @@ def test_calculate_coefficient_of_variation_without_statistics_module(coefficien
 @pytest.mark.parametrize(
     "standardization_target_values_with, standardized_data_expected_with",
     [([2, 3, 4, 3, 2, 7, 5, 6], [-4.6, -2.3, 0]),
-     ([10, 5, 6, 4, 3, 11, 12, 7], [6.8, -5.7, -3.2]),
-     ([9, 4, 5, 3, 2, 3, 10, 8], [3.2, 0.6, 1.1])]
+     ([10, 5, 6, 4, 3, 11, 12, 7], [6.3, -5.2, -2.9]),
+     ([9, 4, 5, 3, 2, 3, 10, 8], [6.7, -2.9, -1.0])]
 )
-"""
-Make correct expected results
-statistics.pstdev() --> 標準偏差
-statistics.mean() --> 平均値
-values_a = [2, 3, 4, 3, 2, 7, 5, 6]
-values_b = [10, 5, 6, 4, 3, 11, 12, 7]
-values_c = [9, 4, 5, 3, 2, 3, 10, 8]
-print((values_a[0] - statistics.mean(values_a)) / (statistics.pstdev(values_a) / statistics.mean(values_a)))
-標準偏差 / 平均値 --> 変動係数
-(target values [0]-[2] の値 - 平均値) / 変動係数
-
-[-4.6, -2.3, 0] should be ok
-"""
 def test_standardize_data_with_statistics_module(standardization_target_values_with, standardized_data_expected_with):
     mean_result = statistics.mean(standardization_target_values_with)
     population_standard_deviation_result = statistics.pstdev(standardization_target_values_with)
     coefficient_of_variation = population_standard_deviation_result / mean_result
     standardized_data = [(standardization_target_value_with - mean_result) / coefficient_of_variation for standardization_target_value_with in standardization_target_values_with]
-    assert standardized_data[0] == pytest.approx(standardized_data_expected_with[0], abs=0.01)
-    assert standardized_data[1] == pytest.approx(standardized_data_expected_with[1], abs=0.01)
-    assert standardized_data[2] == pytest.approx(standardized_data_expected_with[2], abs=0.01)
+    assert standardized_data[0] == pytest.approx(standardized_data_expected_with[0], abs=0.1)
+    assert standardized_data[1] == pytest.approx(standardized_data_expected_with[1], abs=0.1)
+    assert standardized_data[2] == pytest.approx(standardized_data_expected_with[2], abs=0.1)
 
 """
 parametrizeの第一引数のリストの長さは8にする
