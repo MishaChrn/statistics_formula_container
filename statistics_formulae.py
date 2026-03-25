@@ -31,3 +31,8 @@ def calculate_population_standard_deviation_without_statistics_module(population
     population_standard_deviation_result = abs(population_variance ** 0.5)
     return population_standard_deviation_result
 
+def calculate_coefficient_of_variation_without_statistics_module(coefficient_of_variation_target_values):
+    mean_result = calculate_arithmetic_mean_without_statistics_module(coefficient_of_variation_target_values)
+    population_standard_deviation_result = calculate_population_standard_deviation_without_statistics_module(coefficient_of_variation_target_values)
+    coefficient_of_variation = population_standard_deviation_result / mean_result
+    return coefficient_of_variation

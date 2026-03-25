@@ -5,6 +5,7 @@ from statistics_formulae import calculate_median_without_statistics_module
 from statistics_formulae import calculate_arithmetic_mean_without_statistics_module
 from statistics_formulae import calculate_population_variance_without_statistics_module
 from statistics_formulae import calculate_population_standard_deviation_without_statistics_module
+from statistics_formulae import calculate_coefficient_of_variation_without_statistics_module
 import numpy as np
 
 def test_calculate_arithmetic_mean_without_statistics_module():
@@ -207,6 +208,21 @@ def test_standardize_data_with_statistics_module(standardization_target_values_w
     assert standardized_data[0] == pytest.approx(standardized_data_expected_with[0], abs=0.1)
     assert standardized_data[1] == pytest.approx(standardized_data_expected_with[1], abs=0.1)
     assert standardized_data[2] == pytest.approx(standardized_data_expected_with[2], abs=0.1)
+
+@pytest.mark.parametrize(
+    "standardization_target_values_without, standardized_data_expected_without",
+    [([2, 3, 4, 3, 2, 7, 5, 6], [-4.6, -2.3, 0]),
+     ([10, 5, 6, 4, 3, 11, 12, 7], [6.3, -5.2, -2.9]),
+     ([9, 4, 5, 3, 2, 3, 10, 8], [6.7, -2.9, -1.0])]
+)
+def test_standardize_data_without_statistics_module(standardization_target_values_without, standardized_data_expected_without):
+    mean_result = calculate_arithmetic_mean_without_statistics_module(standardization_target_values_without)
+    population_standard_deviation_result = calculate_population_standard_deviation_without_statistics_module(standardization_target_values_without)
+    coefficient_of_variation = calculate_coefficient_of_variation_without_statistics_module(standardization_target_values_without)
+    standardized_data = [(standardization_target_value_without - mean_result) / coefficient_of_variation for standardization_target_value_without in standardization_target_values_without]
+    assert standardized_data[0] == pytest.approx(standardized_data_expected_without[0], abs=0.1)
+    assert standardized_data[1] == pytest.approx(standardized_data_expected_without[1], abs=0.1)
+    assert standardized_data[2] == pytest.approx(standardized_data_expected_without[2], abs=0.1)
 
 """
 parametrizeの第一引数のリストの長さは8にする
