@@ -224,7 +224,18 @@ def test_standardize_data_without_statistics_module(standardization_target_value
     assert standardized_data[1] == pytest.approx(standardized_data_expected_without[1], abs=0.1)
     assert standardized_data[2] == pytest.approx(standardized_data_expected_without[2], abs=0.1)
 
-"""
-parametrizeの第一引数のリストの長さは8にする
-元の個別データ-平均値/標準偏差
-"""
+@pytest.mark.parametrize(
+    "adjusted_standardization_target_values_with, adjusted_standardized_data_expected_with",
+    [([2, 3, 4, 3, 2, 7, 5, 6], [4, 27, 50]),
+     ([10, 5, 6, 4, 3, 11, 12, 7], [113, -2, 21]),
+     ([9, 4, 5, 3, 2, 3, 10, 8], [117, 21, 40])]
+)
+def test_adjusted_standardized_data_with_statistics_module(adjusted_standardization_target_values_with, adjusted_standardized_data_expected_with):
+    mean_result = statistics.mean(adjusted_standardization_target_values_with)
+    population_standard_deviation_result = statistics.pstdev(adjusted_standardization_target_values_with)
+    coefficient_of_variation = population_standard_deviation_result / mean_result
+    standardized_data = [(standardization_target_value_with - mean_result) / coefficient_of_variation for standardization_target_value_with in adjusted_standardization_target_values_with]
+    adjusted_standardized_data = [(standardized_data_element * 10) + 50 for standardized_data_element in standardized_data]
+    assert adjusted_standardized_data[0] == pytest.approx(adjusted_standardized_data_expected_with[0], abs=0.1)
+    assert adjusted_standardized_data[1] == pytest.approx(adjusted_standardized_data_expected_with[1], abs=0.1)
+    assert adjusted_standardized_data[2] == pytest.approx(adjusted_standardized_data_expected_with[2], abs=0.1)
