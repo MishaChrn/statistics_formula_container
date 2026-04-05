@@ -36,3 +36,10 @@ def calculate_coefficient_of_variation_without_statistics_module(coefficient_of_
     population_standard_deviation_result = calculate_population_standard_deviation_without_statistics_module(coefficient_of_variation_target_values)
     coefficient_of_variation = population_standard_deviation_result / mean_result
     return coefficient_of_variation
+
+def standardize_data_without_statistics_module(standardization_target_values_without):
+    mean_result = calculate_arithmetic_mean_without_statistics_module(standardization_target_values_without)
+    population_standard_deviation_result = calculate_population_standard_deviation_without_statistics_module(standardization_target_values_without)
+    coefficient_of_variation = calculate_coefficient_of_variation_without_statistics_module(standardization_target_values_without)
+    standardized_data = [(standardization_target_value_without - mean_result) / coefficient_of_variation for standardization_target_value_without in standardization_target_values_without]
+    return standardized_data

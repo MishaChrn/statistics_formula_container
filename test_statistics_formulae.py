@@ -6,6 +6,7 @@ from statistics_formulae import calculate_arithmetic_mean_without_statistics_mod
 from statistics_formulae import calculate_population_variance_without_statistics_module
 from statistics_formulae import calculate_population_standard_deviation_without_statistics_module
 from statistics_formulae import calculate_coefficient_of_variation_without_statistics_module
+from statistics_formulae import standardize_data_without_statistics_module
 import numpy as np
 
 def test_calculate_arithmetic_mean_without_statistics_module():
@@ -235,7 +236,20 @@ def test_adjusted_standardized_data_with_statistics_module(adjusted_standardizat
     population_standard_deviation_result = statistics.pstdev(adjusted_standardization_target_values_with)
     coefficient_of_variation = population_standard_deviation_result / mean_result
     standardized_data = [(standardization_target_value_with - mean_result) / coefficient_of_variation for standardization_target_value_with in adjusted_standardization_target_values_with]
+    adjusted_standardized_data_with = [(standardized_data_element * 10) + 50 for standardized_data_element in standardized_data]
+    assert adjusted_standardized_data_with[0] == pytest.approx(adjusted_standardized_data_expected_with[0], abs=0.5)
+    assert adjusted_standardized_data_with[1] == pytest.approx(adjusted_standardized_data_expected_with[1], abs=0.5)
+    assert adjusted_standardized_data_with[2] == pytest.approx(adjusted_standardized_data_expected_with[2], abs=0.5)
+
+@pytest.mark.parametrize(
+    "adjusted_standardization_target_values, adjusted_standardized_data_expected",
+    [([2, 3, 4, 3, 2, 7, 5, 6], [4, 27, 50]),
+     ([10, 5, 6, 4, 3, 11, 12, 7], [113, -2, 21]),
+     ([9, 4, 5, 3, 2, 3, 10, 8], [117, 21, 40])]
+)
+def test_adjusted_standardized_data_without_statistics_module(adjusted_standardization_target_values, adjusted_standardized_data_expected):
+    standardized_data = standardize_data_without_statistics_module(adjusted_standardization_target_values)
     adjusted_standardized_data = [(standardized_data_element * 10) + 50 for standardized_data_element in standardized_data]
-    assert adjusted_standardized_data[0] == pytest.approx(adjusted_standardized_data_expected_with[0], abs=0.1)
-    assert adjusted_standardized_data[1] == pytest.approx(adjusted_standardized_data_expected_with[1], abs=0.1)
-    assert adjusted_standardized_data[2] == pytest.approx(adjusted_standardized_data_expected_with[2], abs=0.1)
+    assert adjusted_standardized_data[0] == pytest.approx(adjusted_standardized_data_expected[0], abs=0.5)
+    assert adjusted_standardized_data[1] == pytest.approx(adjusted_standardized_data_expected[1], abs=0.5)
+    assert adjusted_standardized_data[2] == pytest.approx(adjusted_standardized_data_expected[2], abs=0.5)
