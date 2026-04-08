@@ -8,6 +8,7 @@ from statistics_formulae import calculate_population_standard_deviation_without_
 from statistics_formulae import calculate_coefficient_of_variation_without_statistics_module
 from statistics_formulae import standardize_data_without_statistics_module
 import numpy as np
+from scipy import stats
 
 def test_calculate_arithmetic_mean_without_statistics_module():
     # Calculates the arithmetic mean (平均値) from the elements in mean_target_values.
@@ -253,3 +254,17 @@ def test_adjusted_standardized_data_without_statistics_module(adjusted_standardi
     assert adjusted_standardized_data[0] == pytest.approx(adjusted_standardized_data_expected[0], abs=0.5)
     assert adjusted_standardized_data[1] == pytest.approx(adjusted_standardized_data_expected[1], abs=0.5)
     assert adjusted_standardized_data[2] == pytest.approx(adjusted_standardized_data_expected[2], abs=0.5)
+
+"""
+相関係数を求めるscipyサンプルコード
+from scipy import stats
+
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+
+corr_value, p_value = stats.pearsonr(x, y)
+
+print("相関係数:", corr_value)   # 1.0
+print("p値:", p_value)         # 0.0(厳密には非常に小さい値)
+
+"""
