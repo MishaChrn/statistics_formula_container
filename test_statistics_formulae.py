@@ -263,16 +263,3 @@ def test_calculate_coefficient_of_correlation(data_1, data_2, expected_corrcoef_
     corr_value, p_value = stats.pearsonr(data_1, data_2)
     assert corr_value == pytest.approx(expected_corrcoef_with, abs=0.1)
 
-"""
-相関係数を求めるscipyサンプルコード
-from scipy import stats
-
-x = [1, 2, 3, 4, 5]
-y = [2, 4, 6, 8, 10]
-
-corr_value, p_value = stats.pearsonr(x, y)
-
-print("相関係数:", corr_value)   # 1.0
-print("p値:", p_value)         # 0.0(厳密には非常に小さい値)
-
-"""
