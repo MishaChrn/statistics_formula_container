@@ -255,6 +255,14 @@ def test_adjusted_standardized_data_without_statistics_module(adjusted_standardi
     assert adjusted_standardized_data[1] == pytest.approx(adjusted_standardized_data_expected[1], abs=0.5)
     assert adjusted_standardized_data[2] == pytest.approx(adjusted_standardized_data_expected[2], abs=0.5)
 
+@pytest.mark.parametrize(
+    "data_1, data_2, expected_corrcoef_with",
+    [([100, 150, 50, 75, 60, 125, 200], [20, 30, 15, 25, 30, 35, 40], 0.77)]
+)
+def test_calculate_coefficient_of_correlation(data_1, data_2, expected_corrcoef_with):
+    corr_value, p_value = stats.pearsonr(data_1, data_2)
+    assert corr_value == pytest.approx(expected_corrcoef_with, abs=0.1)
+
 """
 相関係数を求めるscipyサンプルコード
 from scipy import stats
